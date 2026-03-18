@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enlaces rápidos · Creación de cuentas</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f2f9 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+        .tarjeta {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border-radius: 2.5rem;
+            box-shadow: 0 20px 40px -10px rgba(0, 20, 40, 0.25), 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem 2rem 2.5rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            color: #0b2b3b;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+        }
+        .subtitulo {
+            font-size: 1rem;
+            color: #2c4e5e;
+            margin-bottom: 2rem;
+            border-left: 4px solid #3b82f6;
+            padding-left: 1rem;
+            background: #eef6ff80;
+            border-radius: 0 1rem 1rem 0;
+            line-height: 1.4;
+        }
+        .grid-divs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        /* cada div es un bloque numerado con estilo de botón */
+        .div-enlace {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 60px;
+            padding: 0.2rem 0.2rem 0.2rem 0.4rem;
+            box-shadow: 0 4px 8px rgba(0, 20, 30, 0.1), 0 2px 2px rgba(0,0,0,0.03);
+            border: 1px solid #cddde9;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            user-select: none;
+        }
+        .div-enlace:hover {
+            background: #f9fdff;
+            border-color: #3b82f6;
+            box-shadow: 0 8px 18px -6px #3b83f65e;
+            transform: scale(1.01);
+        }
+        .div-enlace:active {
+            background: #e6f0ff;
+            transform: scale(0.99);
+            border-color: #2563eb;
+        }
+        /* número de orden circular */
+        .numero {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 3.2rem;
+            height: 3.2rem;
+            background: #1e3a5f;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            border-radius: 50%;
+            margin-right: 1rem;
+            box-shadow: 0 6px 10px rgba(0, 50, 80, 0.2);
+            flex-shrink: 0;
+            border: 2px solid white;
+            transition: background 0.1s;
+        }
+        .div-enlace:hover .numero {
+            background: #2563eb;
+        }
+        /* texto de la acción */
+        .descripcion {
+            flex: 1;
+            font-weight: 520;
+            font-size: 1.2rem;
+            color: #0b2b3b;
+            padding-right: 0.5rem;
+        }
+        .descripcion span {
+            font-weight: 400;
+            font-size: 0.9rem;
+            color: #4f6f7f;
+            display: block;
+            margin-top: 2px;
+        }
+        /* pequeño indicador de enlace */
+        .icono-link {
+            background: #eaf1f8;
+            width: 2.8rem;
+            height: 2.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.25rem;
+            font-size: 1.2rem;
+            color: #1e3a5f;
+            transition: 0.1s;
+        }
+        .div-enlace:hover .icono-link {
+            background: #d9e9ff;
+            color: #0b2b3b;
+        }
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            color: #4d6a7e;
+            text-align: center;
+            border-top: 1px dashed #b3cbd9;
+            padding-top: 1.5rem;
+        }
+        .footer-note a {
+            color: #1e3a5f;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .footer-note a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="tarjeta">
+        <h1>⛓️ Enlaces directos</h1>
+        <div class="subtitulo">
+            Haz clic en cualquier bloque numerado — se abrirá la página para crear la cuenta.
+        </div>
+
+        <div class="grid-divs" id="contenedor-divs">
+            <!-- 1: Gmail -->
+            <div class="div-enlace" data-url="https://accounts.google.com/signup">
+                <span class="numero">1</span>
+                <span class="descripcion">Crear cuenta de Gmail <span>almacenamiento, correo y más</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+            <!-- 2: ChatGPT -->
+            <div class="div-enlace" data-url="https://chat.openai.com/auth/login">
+                <span class="numero">2</span>
+                <span class="descripcion">Crear cuenta de ChatGPT <span>inteligencia artificial conversacional</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+            <!-- 3: DeepSeek -->
+            <div class="div-enlace" data-url="https://platform.deepseek.com/sign_up">
+                <span class="numero">3</span>
+                <span class="descripcion">Crear cuenta de DeepSeek <span>modelos de lenguaje y plataforma</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+            <!-- 4: GitHub -->
+            <div class="div-enlace" data-url="https://github.com/signup">
+                <span class="numero">4</span>
+                <span class="descripcion">Crear cuenta de GitHub <span>repositorios y colaboración</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+            <!-- 5: webtointoapp (posible typo: asumo web into app o similar) -->
+            <div class="div-enlace" data-url="https://www.webintoapp.com/register">
+                <span class="numero">5</span>
+                <span class="descripcion">Crear cuenta de WebintoApp <span>convierte web en app</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+            <!-- 6: base44.com -->
+            <div class="div-enlace" data-url="https://base44.com/signup">
+                <span class="numero">6</span>
+                <span class="descripcion">Crear cuenta en Base44.com <span>plataforma low-code / backend</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+            <!-- 7: subir app a Play Store (guía oficial) -->
+            <div class="div-enlace" data-url="https://play.google.com/console/about/">
+                <span class="numero">7</span>
+                <span class="descripcion">Subir app a Play Store <span>consola de desarrollador Android</span></span>
+                <span class="icono-link">🔗</span>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            ⚡ Cada div tiene su propio enlace. <br> 
+            <span style="opacity:0.7">(los enlaces se abren en pestaña nueva · redirigen a registro oficial)</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Seleccionar todos los divs con la clase .div-enlace dentro del contenedor
+            const divs = document.querySelectorAll('.div-enlace');
+            
+            // Función para manejar el click: abre la URL asociada en una nueva pestaña
+            function abrirEnlace(event) {
+                // Obtenemos el elemento que recibió el click (aseguramos el div contenedor)
+                let target = event.currentTarget; // .div-enlace
+                
+                // Leer el atributo data-url
+                const url = target.getAttribute('data-url');
+                
+                // Verificar que exista la URL y no sea vacía
+                if (url && url.startsWith('http')) {
+                    // Abrir en una nueva pestaña (window.open con _blank)
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                } else {
+                    // Fallback por si falta la url (no debería ocurrir)
+                    console.warn('URL no válida en el elemento', target);
+                    // Podríamos mostrar un aviso sutil, pero mejor no interrumpir.
+                }
+            }
+
+            // Asignar el evento click a cada div
+            divs.forEach(div => {
+                div.addEventListener('click', abrirEnlace);
+                
+                // Pequeña mejora de accesibilidad: al presionar Enter/Espacio también abre el enlace
+                div.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();  // Evita scroll con espacio
+                        abrirEnlace(e);
+                    }
+                });
+                
+                // Hacer que cada div sea focusable para navegación por teclado (opcional)
+                // pero ya que por defecto los divs no son focables, añadimos tabindex=0
+                div.setAttribute('tabindex', '0');
+                div.setAttribute('role', 'button');  // semántica de botón
+                div.setAttribute('aria-label', `Abrir enlace para ${div.querySelector('.descripcion')?.innerText.trim() || 'crear cuenta'}`);
+            });
+
+            // (opcional) Si algún div no tiene data-url por error, se indica en consola.
+            // pero todos están asignados manualmente en el HTML.
+        })();
+    </script>
+
+    <!-- Nota: se incluye un pequeño detalle adicional para que los enlaces 
+         de webintoapp y base44 sean funcionales; si las páginas cambian 
+         sus rutas de registro, bastaría con modificar el data-url. 
+         En base44 no estoy 100% seguro si usan /signup o /register,
+         pero lo dejamos como /signup que es lo más común. Se puede ajustar -->
+</body>
+</html>
