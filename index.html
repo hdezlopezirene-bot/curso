@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso UI: Elementos de aplicación</title>
+    <!-- Font Awesome para íconos (hamburguesa, ejemplos) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        body {
+            background: #f1f5f9;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* ===== ENCABEZADO CON MENÚ HORIZONTAL Y HAMBURGUESA ===== */
+        .navbar {
+            background: #0b2b40;
+            color: white;
+            padding: 0.8rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: #ffb74d;
+        }
+
+        /* menú horizontal (visible en escritorio) */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        .nav-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+        }
+        .nav-links a:hover {
+            border-bottom-color: #ffb74d;
+            color: white;
+        }
+
+        /* botón hamburguesa (oculto en desktop) */
+        .hamburger-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            display: none;
+        }
+
+        /* menú desplegable tipo hamburguesa (mobile) */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            background: #1e4a6d;
+            width: 100%;
+            padding: 1rem 2rem;
+            list-style: none;
+            border-top: 1px solid #567d9a;
+        }
+        .mobile-menu li {
+            margin: 0.5rem 0;
+        }
+        .mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: block;
+            padding: 0.3rem 0;
+        }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .container {
+            max-width: 1300px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        h1 {
+            font-weight: 400;
+            color: #0b2b40;
+            margin-bottom: 1.5rem;
+            border-left: 6px solid #ffb74d;
+            padding-left: 1rem;
+        }
+        .subtitle {
+            color: #2c3e50;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* ===== CUADRÍCULA DE COMPONENTES ===== */
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 1.8rem 1.5rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05), 0 6px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h3 {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: #0f3b4f;
+            border-bottom: 2px dashed #cbd5e1;
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .card h3 i {
+            color: #ff9f4b;
+        }
+
+        /* estilos para selects, inputs, etc */
+        .select-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+        .select-styled {
+            padding: 0.6rem 1rem;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            background: #f8fafc;
+            font-size: 1rem;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s;
+        }
+        .select-styled:hover {
+            border-color: #ff9800;
+        }
+        .select-styled:focus {
+            border-color: #e68200;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        .radio-group label, .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 1rem;
+            color: #1e293b;
+            cursor: pointer;
+        }
+        input[type="radio"], input[type="checkbox"] {
+            accent-color: #ff9800;
+            width: 1.1rem;
+            height: 1.1rem;
+        }
+
+        .buttons-demo {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+        .btn {
+            padding: 0.6rem 1.4rem;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background: #ff9800;
+            color: white;
+        }
+        .btn-primary:hover {
+            background: #e68200;
+            transform: scale(1.02);
+        }
+        .btn-outline {
+            border: 2px solid #0b2b40;
+            background: transparent;
+            color: #0b2b40;
+        }
+        .btn-outline:hover {
+            background: #0b2b40;
+            color: white;
+        }
+        .btn-icon {
+            background: #e2e8f0;
+            font-size: 1.2rem;
+            padding: 0.6rem 1rem;
+        }
+
+        .slider-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        input[type=range] {
+            width: 100%;
+            accent-color: #ff9800;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 22px;
+            background: #e2e8f0;
+            border-radius: 40px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            width: 67%;
+            height: 100%;
+            background: linear-gradient(90deg, #ffb74d, #ff9800);
+            color: white;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 26px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .3s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .3s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #ff9800;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        /* select personalizado (simula dropdown nativo) */
+        .custom-select-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .custom-select {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 40px;
+            padding: 0.6rem 2rem 0.6rem 1rem;
+            appearance: none;
+            -webkit-appearance: none;
+            width: 100%;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .custom-select-wrapper::after {
+            content: "▼";
+            font-size: 0.8rem;
+            color: #0b2b40;
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        /* Pestañas / tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #ddd;
+            gap: 1.5rem;
+        }
+        .tab {
+            padding: 0.5rem 0;
+            font-weight: 600;
+            color: #64748b;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+        .tab.active {
+            color: #ff9800;
+            border-bottom-color: #ff9800;
+        }
+
+        /* acordeón simple */
+        .accordion-item {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .accordion-header {
+            background: none;
+            border: none;
+            padding: 1rem 0;
+            font-weight: 600;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            color: #0f3b4f;
+        }
+        .accordion-content {
+            padding-bottom: 1rem;
+            color: #334155;
+        }
+
+        /* tooltip demo */
+        .tooltip-container {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        .tooltip-icon {
+            background: #cbd5e1;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: relative;
+            cursor: help;
+        }
+        .tooltip-icon:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            background: #1e293b;
+            color: white;
+            font-size: 0.8rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 12px;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        footer {
+            background: #0b2b40;
+            color: #afc5d4;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        /* responsive: ocultar menú horizontal y mostrar botón hamburguesa */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger-btn {
+                display: block;
+            }
+            .mobile-menu.active {
+                display: flex;
+            }
+            .navbar {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-menu {
+                display: none !important; /* asegurado que no se vea en desktop */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo"><span>🖥️</span> CursoUI</div>
+            <!-- Menú horizontal tradicional -->
+            <ul class="nav-links">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Componentes</a></li>
+                <li><a href="#">Ejemplos</a></li>
+                <li><a href="#">Recursos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+            <!-- Botón hamburguesa (visible solo móvil) -->
+            <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <!-- Menú desplegable móvil (hamburguesa) -->
+            <ul class="mobile-menu" id="mobileMenu">
+                <li><a href="#">Inicio</a></li>
+                <li><a href="#">Componentes</a></li>
+                <li><a href="#">Ejemplos</a></li>
+                <li><a href="#">Recursos</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Elementos de interfaz para aplicaciones</h1>
+        <div class="subtitle">Explorá los componentes más usados: menús, selects, botones, controles y más.</div>
+
+        <div class="components-grid">
+            <!-- Tarjeta: Menú Hamburguesa (ya visible en navbar) pero lo explicamos -->
+            <div class="card">
+                <h3><i class="fas fa-bars"></i> Menú hamburguesa</h3>
+                <p style="margin-bottom: 1rem;">Arriba, en la barra de navegación. <strong>Reducí la ventana</strong> o probá en móvil para ver el ícono ☰. Al hacer clic se despliega.</p>
+                <div style="background: #f0f4fa; border-radius: 40px; padding: 1rem; text-align: center;">
+                    <i class="fas fa-bars" style="font-size: 2rem; background: #0b2b40; color: white; padding: 0.5rem 1rem; border-radius: 30px;"></i> 
+                    <span style="margin-left: 1rem;">→ botón hamburguesa funcional</span>
+                </div>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">(Hacé clic en el ícono de arriba a la derecha en móvil)</p>
+            </div>
+            
+            <!-- Tarjeta: Selects (nativos y personalizados) -->
+            <div class="card">
+                <h3><i class="fas fa-caret-down"></i> Select / Combobox</h3>
+                <div class="select-group">
+                    <label>Selección simple (nativo):</label>
+                    <select class="select-styled">
+                        <option>Opción básica</option>
+                        <option>Panel de control</option>
+                        <option>Configuración avanzada</option>
+                        <option>Ayuda</option>
+                    </select>
+
+                    <label>Select con estilo personalizado:</label>
+                    <div class="custom-select-wrapper">
+                        <select class="custom-select">
+                            <option>Usuario estándar</option>
+                            <option>Administrador</option>
+                            <option>Invitado</option>
+                            <option>Supervisor</option>
+                        </select>
+                    </div>
+
+                    <label>Select múltiple (con Ctrl):</label>
+                    <select class="select-styled" multiple size="3">
+                        <option>Módulo ventas</option>
+                        <option>Módulo stock</option>
+                        <option>Módulo RRHH</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Radio y Checkbox -->
+            <div class="card">
+                <h3><i class="fas fa-check-circle"></i> Radios / Checkboxes</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                    <div>
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Radio:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="radioGroup"> Diurna</label>
+                            <label><input type="radio" name="radioGroup" checked> Vespertina</label>
+                            <label><input type="radio" name="radioGroup"> Nocturna</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label style="font-weight: 600; display: block; margin-bottom: 8px;">Checkbox:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox"> Notificaciones</label>
+                            <label><input type="checkbox" checked> Modo oscuro</label>
+                            <label><input type="checkbox"> Beta tester</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Botones variados -->
+            <div class="card">
+                <h3><i class="fas fa-lightbulb"></i> Botones</h3>
+                <div class="buttons-demo">
+                    <button class="btn btn-primary">Principal</button>
+                    <button class="btn btn-outline">Secundario</button>
+                    <button class="btn btn-icon"><i class="fas fa-download"></i></button>
+                    <button class="btn" disabled>Deshabilitado</button>
+                </div>
+                <div style="margin-top: 1.2rem;">
+                    <span class="btn" style="background:#0b2b40; color:white; border-radius: 30px;">⌨️ Con ícono</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Slider (range) y progreso -->
+            <div class="card">
+                <h3><i class="fas fa-sliders-h"></i> Slider / Progress</h3>
+                <div class="slider-demo">
+                    <label>Brillo <span id="sliderVal">50</span>%</label>
+                    <input type="range" min="0" max="100" value="50" id="brightnessSlider" oninput="document.getElementById('sliderVal').innerText=this.value">
+
+                    <label>Progreso de carga:</label>
+                    <div class="progress-bar">
+                        <div class="progress-fill">67%</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Toggle switch y Tabs -->
+            <div class="card">
+                <h3><i class="fas fa-toggle-on"></i> Toggle / Pestañas</h3>
+                <div class="toggle-switch">
+                    <span>Wifi</span>
+                    <label class="switch">
+                        <input type="checkbox" checked>
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <div style="margin-top: 1.5rem;">
+                    <div class="tabs">
+                        <div class="tab active">Perfil</div>
+                        <div class="tab">Ajustes</div>
+                        <div class="tab">Notificaciones</div>
+                    </div>
+                    <div style="padding: 1rem 0; color: #334155;">Contenido de la pestaña activa.</div>
+                </div>
+            </div>
+
+            <!-- Tarjeta: Acordeón y tooltips -->
+            <div class="card">
+                <h3><i class="fas fa-chevron-down"></i> Acordeón / Tooltip</h3>
+                <div class="accordion-item">
+                    <button class="accordion-header" onclick="alert('expandir/colapsar en un caso real')">¿Qué es este curso? <span>▼</span></button>
+                    <div class="accordion-content">Demo de elemento acordeón. Aquí se desplegaría información.</div>
+                </div>
+                <div class="tooltip-container" style="margin-top: 1rem;">
+                    <span>Pasa el cursor:</span>
+                    <span class="tooltip-icon" data-tooltip="Esto es un tooltip">i</span>
+                    <span class="tooltip-icon" data-tooltip="Otro mensaje contextual">?</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta extra: más elementos de formulario -->
+            <div class="card">
+                <h3><i class="fas fa-tasks"></i> Inputs varios</h3>
+                <label>Campo de texto:</label>
+                <input type="text" placeholder="Escribí algo..." style="width:100%; padding:0.7rem; border-radius: 30px; border:1px solid #ccc; margin:10px 0;">
+                <label>Fecha:</label>
+                <input type="date" style="padding:0.5rem; border-radius:30px; border:1px solid #ccc; width:100%;">
+            </div>
+
+            <!-- Tarjeta: menú contextual (simulado) -->
+            <div class="card">
+                <h3><i class="fas fa-ellipsis-v"></i> Menú contextual</h3>
+                <div style="display: flex; justify-content: space-around;">
+                    <i class="fas fa-ellipsis-h" style="font-size:2rem; background:#eee; padding:0.5rem 1rem; border-radius: 30px;"></i>
+                    <i class="fas fa-ellipsis-v" style="font-size:2rem; background:#eee; padding:0.5rem 1rem; border-radius: 30px;"></i>
+                </div>
+                <p style="margin-top:0.8rem; text-align:center;">Íconos de menú kebab y hamburguesa vertical</p>
+            </div>
+        </div>
+
+        <!-- Banner con mensaje final -->
+        <div style="background: linear-gradient(145deg, #fef3e7, #fff7ed); border-radius: 2rem; padding: 2rem; margin-top: 1rem; border: 1px solid #ffe0b5;">
+            <span style="font-size: 2rem; display: block; text-align: center;">🖱️ Todos los elementos reunidos para tu curso</span>
+            <p style="text-align: center; margin-top: 1rem;">Explorá, probá interacciones y redimensioná la ventana para ver el comportamiento responsive.</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Curso de aplicaciones — Demostración de componentes · Menú, select, hamburguesa, tabs y más</p>
+    </footer>
+
+    <!-- JavaScript para el menú hamburguesa (toggle) -->
+    <script>
+        (function() {
+            const hamburgerBtn = document.getElementById('hamburgerBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (hamburgerBtn && mobileMenu) {
+                hamburgerBtn.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('active');
+                });
+
+                // Cerrar menú al hacer click en un enlace (opcional)
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();  // solo para demo (evita navegación)
+                        mobileMenu.classList.remove('active');
+                    });
+                });
+            }
+
+            // Evitar que los enlaces del navbar recarguen (demostración)
+            document.querySelectorAll('.nav-links a, .mobile-menu a').forEach(link => {
+                link.addEventListener('click', (e) => e.preventDefault());
+            });
+        })();
+    </script>
+    <!-- Pequeño detalle para actualizar valor del slider (ya inline) -->
+</body>
+</html>
